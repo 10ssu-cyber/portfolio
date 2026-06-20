@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: lee-susung-portfolio
+    runtime: static
+    staticPublishPath: .
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=86400
