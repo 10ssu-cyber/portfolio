@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work Inquiry — Lee Susung</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .form-success {
+      display: none;
+      padding: 3rem 0;
+    }
+    .form-success .success-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .form-success .success-title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      text-transform: uppercase;
+      line-height: 0.92;
+      margin-bottom: 1.25rem;
+    }
+    .form-success p {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(0,0,0,0.7);
+      line-height: 1.55;
+      max-width: 42ch;
+    }
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-logo">
+      <a href="index.html">SS.L</a>
+    </div>
+    <nav>
+      <ul class="header-nav">
+        <li><a href="about.html"><span class="nav-num">01</span>About</a></li>
+        <li><a href="contact.html" class="active"><span class="nav-num">02</span>Work Inquiry</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="page-top">
+    <p class="page-section-num">02</p>
+    <h1 class="page-title">Work<br>Inquiry</h1>
+  </div>
+
+  <div class="contact-grid">
+
+    <div class="contact-form-wrap">
+      <p class="contact-form-intro">
+        프로젝트에 대해 알려주세요. 2 영업일 이내에 답변드리겠습니다.
+      </p>
+
+      <form id="contactForm" method="POST" action="https://api.web3forms.com/submit">
+        <input type="hidden" name="access_key" value="1077bfc2-5668-4c0c-b405-6ba11df6ba8b">
+        <input type="hidden" name="subject" value="New Work Inquiry — Lee Susung Portfolio">
+        <input type="hidden" name="from_name" value="Portfolio Contact Form">
+        <input type="checkbox" name="botcheck" style="display:none">
+
+        <div class="form-field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-field">
+          <label for="company">Company / Brand</label>
+          <input type="text" id="company" name="company" placeholder="Optional">
+        </div>
+        <div class="form-field">
+          <label for="type">Project Type</label>
+          <select id="type" name="type" required>
+            <option value="" disabled selected>Select one</option>
+            <option value="brand-identity">Brand Identity</option>
+            <option value="editorial">Editorial Design</option>
+            <option value="book">Book Design</option>
+            <option value="packaging">Packaging Design</option>
+            <option value="art-direction">Art Direction</option>
+            <option value="graphic">Graphic Design</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="budget">Budget Range</label>
+          <select id="budget" name="budget">
+            <option value="" disabled selected>Select range</option>
+            <option value="under-5m">Under ₩5,000,000</option>
+            <option value="5-10m">₩5,000,000 – ₩10,000,000</option>
+            <option value="10-30m">₩10,000,000 – ₩30,000,000</option>
+            <option value="30-50m">₩30,000,000 – ₩50,000,000</option>
+            <option value="over-50m">₩50,000,000+</option>
+            <option value="tbd">To be discussed</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="timeline">Timeline</label>
+          <input type="text" id="timeline" name="timeline" placeholder="e.g. 3 months, by March 2025">
+        </div>
+        <div class="form-field">
+          <label for="message">Project Brief</label>
+          <textarea id="message" name="message" placeholder="Describe your project, goals, and any references." required></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="submitBtn">Send Inquiry</button>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <p class="success-label">Sent</p>
+        <h2 class="success-title">Thank you.</h2>
+        <p>Your inquiry has been received. I'll be in touch within 2 business days.</p>
+      </div>
+    </div>
+
+    <div class="contact-info-col">
+      <div class="info-block">
+        <h3>Services</h3>
+        <ul>
+          <li>Brand Identity &amp; Visual Systems</li>
+          <li>Editorial &amp; Book Design</li>
+          <li>Packaging Design</li>
+          <li>Art Direction</li>
+          <li>Graphic Design</li>
+          <li>Typography</li>
+        </ul>
+      </div>
+
+      <div class="info-block">
+        <h3>Process</h3>
+        <ul class="process-list">
+          <li>
+            <span class="process-step">01</span>
+            <span>Brief — Understanding your goals, audience, and context</span>
+          </li>
+          <li>
+            <span class="process-step">02</span>
+            <span>Proposal — Scope, timeline, and investment</span>
+          </li>
+          <li>
+            <span class="process-step">03</span>
+            <span>Concept — Initial direction and visual exploration</span>
+          </li>
+          <li>
+            <span class="process-step">04</span>
+            <span>Development — Refinement through iteration</span>
+          </li>
+          <li>
+            <span class="process-step">05</span>
+            <span>Delivery — Final files and guidelines</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="info-block">
+        <h3>Contact</h3>
+        <ul>
+          <li>Seoul, Korea</li>
+          <li><a href="https://www.instagram.com/10ssu/" target="_blank" rel="noopener">@10ssu ↗</a></li>
+        </ul>
+      </div>
+
+      <div class="info-block">
+        <h3>Note</h3>
+        <p>매년 제한된 수의 프로젝트만 진행하여 모든 브리프에 충분한 주의를 기울입니다. 사전 문의를 권장합니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <span>© 2026 Lee Susung</span>
+    <a href="https://www.instagram.com/10ssu/" target="_blank" rel="noopener">@10ssu ↗</a>
+  </footer>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const btn  = document.getElementById('submitBtn');
+    const success = document.getElementById('formSuccess');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+        } else {
+          btn.textContent = 'Send Inquiry';
+          btn.disabled = false;
+          alert('Something went wrong. Please try again.');
+        }
+      } catch {
+        btn.textContent = 'Send Inquiry';
+        btn.disabled = false;
+        alert('Network error. Please try again.');
+      }
+    });
+  </script>
+
+</body>
+</html>
