@@ -163,6 +163,12 @@ img { display: block; max-width: 100%; }
 }
 .hero-ig:hover { color: var(--ink); }
 .hero-ig:hover::after { width: 100%; }
+.hero-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+}
 
 /* ─── PROJECT LIST ─── */
 .projects {
