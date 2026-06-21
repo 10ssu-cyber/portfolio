@@ -76,9 +76,9 @@ if (preview && previewImg) {
       ctx.stroke();
     }
 
-    line(hourAngle, 5, 1);
-    line(minAngle,   5, 1);
-    line(secAngle,   5, 1);
+    line(hourAngle, 1, 1);
+    line(minAngle,  1, 1);
+    line(secAngle,   7, 1);
 
     // Center dot
     ctx.beginPath();
