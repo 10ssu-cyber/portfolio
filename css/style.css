@@ -635,6 +635,13 @@ img { display: block; max-width: 100%; }
   .header-nav { gap: 1.5rem; }
   .cursor-preview { display: none; }
   .about-meta { grid-template-columns: 1fr 1fr; }
+  .hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  .hero-contact { align-items: flex-start; }
+  .hero-name { font-size: 14.5vw; }
 }
 
 /* ─── WANTED SANS — description / body text only ─── */

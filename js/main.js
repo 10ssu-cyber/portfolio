@@ -29,6 +29,7 @@ if (preview && previewImg) {
 // ── Clock cursor — lines radiate from mouse position ──
 (function () {
   if (document.body.dataset.cursor === 'default') return;
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
   const canvas = document.createElement('canvas');
   canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10;';
   document.body.appendChild(canvas);
