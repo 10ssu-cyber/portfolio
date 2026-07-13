@@ -56,7 +56,91 @@ img { display: block; max-width: 100%; }
   --muted: rgba(0, 0, 0, 0.45);
   --border: rgba(0, 0, 0, 0.18);
   --pad: clamp(1.5rem, 4.5vw, 4rem);
+  --grid-cols: 12;
+  --grid-line: rgba(0, 0, 0, 0.055);
+  --grid-frame: rgba(0, 0, 0, 0.22);
 }
+
+/* ─── GRID OVERLAY ─── */
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+/* padded box that matches the content column */
+.grid-overlay .grid-frame {
+  position: absolute;
+  inset: 0;
+  margin: 0 var(--pad);
+  border-left: 1px solid var(--grid-frame);
+  border-right: 1px solid var(--grid-frame);
+}
+/* thin vertical column guides — drawn as a repeating gradient so the
+   line count follows --grid-cols across breakpoints with no JS rebuild */
+.grid-overlay .grid-cols {
+  position: absolute;
+  inset: 0;
+  margin: 0 var(--pad);
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent calc(100% / var(--grid-cols) - 1px),
+    var(--grid-line) calc(100% / var(--grid-cols) - 1px),
+    var(--grid-line) calc(100% / var(--grid-cols))
+  );
+}
+/* top / bottom ruler frame lines */
+.grid-overlay .grid-rule {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--grid-frame);
+}
+.grid-overlay .grid-rule.top { top: 4.6rem; }
+.grid-overlay .grid-rule.bottom { bottom: 4.6rem; }
+
+/* narrow text set into the left / right margin gutters */
+.grid-rail {
+  position: fixed;
+  top: 0; bottom: 0;
+  width: var(--pad);
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.grid-rail.left  { left: 0; }
+.grid-rail.right { right: 0; }
+.grid-rail span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 8.5px;
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.grid-rail.right span { transform: none; }
+
+/* small coordinate ticks in the four corners of the frame */
+.grid-tick {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.grid-tick.tl { top: 3.05rem; left: calc(var(--pad) + 0.4rem); }
+.grid-tick.tr { top: 3.05rem; right: calc(var(--pad) + 0.4rem); }
+.grid-tick.bl { bottom: 3.05rem; left: calc(var(--pad) + 0.4rem); }
+.grid-tick.br { bottom: 3.05rem; right: calc(var(--pad) + 0.4rem); }
 
 /* ─── HEADER ─── */
 .site-header {
@@ -175,10 +259,15 @@ img { display: block; max-width: 100%; }
   padding: 0 var(--pad);
   border-top: 1px solid var(--border);
 }
-.projects-cols {
+/* Project list snaps to the same 12-column grid as the overlay:
+   No. | Project | Discipline | Year land exactly on grid lines. */
+.projects-cols,
+.project-row {
   display: grid;
-  grid-template-columns: 3.5rem 1fr 18rem 4.5rem;
-  gap: 1rem;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0;
+}
+.projects-cols {
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--border);
 }
@@ -189,11 +278,17 @@ img { display: block; max-width: 100%; }
   text-transform: uppercase;
   color: var(--muted);
 }
+/* column placement — shared by header labels and rows */
+.projects-cols .col-label:nth-child(1),
+.project-row .num   { grid-column: 1 / 2; }
+.projects-cols .col-label:nth-child(2),
+.project-row .title { grid-column: 2 / 8; padding-right: 1rem; }
+.projects-cols .col-label:nth-child(3),
+.project-row .cat   { grid-column: 8 / 11; padding-right: 1rem; }
+.projects-cols .col-label:nth-child(4),
+.project-row .yr    { grid-column: 11 / 13; }
 
 .project-row {
-  display: grid;
-  grid-template-columns: 3.5rem 1fr 18rem 4.5rem;
-  gap: 1rem;
   padding: 1.4rem 0;
   border-bottom: 1px solid rgba(0,0,0,0.09);
   align-items: center;
@@ -297,10 +392,14 @@ img { display: block; max-width: 100%; }
   padding-top: 2.5rem;
   border-top: 1px solid var(--border);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2.5rem;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2.75rem 0;
   align-items: start;
 }
+/* each meta block spans 3 of 12 columns → left edge + underline
+   land exactly on grid lines (4 per row on desktop) */
+.meta-block { grid-column: span 3; }
+.meta-block ul { padding-right: 1.5rem; }
 .meta-block h3 {
   font-size: 10px;
   font-weight: 700;
@@ -334,10 +433,15 @@ img { display: block; max-width: 100%; }
 .contact-grid {
   padding: 5rem var(--pad);
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 7rem;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0;
   align-items: start;
 }
+/* form = cols 1–6, info = cols 8–12, col 7 is a grid gutter.
+   No right padding on the form so every input underline terminates
+   exactly on the grid line at column 6. */
+.contact-form-wrap { grid-column: 1 / 7; }
+.contact-info-col  { grid-column: 8 / 13; }
 .contact-form-intro {
   font-size: 15px;
   font-weight: 500;
@@ -493,11 +597,13 @@ img { display: block; max-width: 100%; }
 .project-body {
   padding: 5rem var(--pad);
   display: grid;
-  grid-template-columns: 14rem 1fr;
-  gap: 7rem;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0;
   align-items: start;
 }
-.project-meta { position: sticky; top: 6rem; }
+/* meta = cols 1–3, one empty gutter column, desc = cols 5–12 */
+.project-meta { grid-column: 1 / 4; position: sticky; top: 6rem; padding-right: 1.5rem; }
+.project-desc { grid-column: 5 / 13; }
 .project-meta-block { margin-bottom: 2rem; }
 .project-meta-block h3 {
   font-size: 10px;
@@ -618,23 +724,47 @@ img { display: block; max-width: 100%; }
 }
 
 /* ─── RESPONSIVE ─── */
+/* Tablet: overlay drops to 6 columns → content boundaries move to
+   even grid lines (2 / 10 / …) so they still land on the overlay. */
 @media (max-width: 960px) {
-  .projects-cols { grid-template-columns: 2.5rem 1fr 4.5rem; }
-  .project-row   { grid-template-columns: 2.5rem 1fr 4.5rem; }
+  :root { --grid-cols: 6; }
+  .grid-rail span { letter-spacing: 0.3em; }
+
+  .projects-cols .col-label:nth-child(1),
+  .project-row .num   { grid-column: 1 / 3; }
+  .projects-cols .col-label:nth-child(2),
+  .project-row .title { grid-column: 3 / 11; }
   .projects-cols .col-label:nth-child(3),
-  .project-row .cat { display: none; }
-  .about-meta { grid-template-columns: 1fr 1fr; }
-  .contact-grid { grid-template-columns: 1fr; gap: 3.5rem; }
-  .project-body { grid-template-columns: 1fr; gap: 3rem; }
-  .project-meta { position: static; }
+  .project-row .cat   { display: none; }
+  .projects-cols .col-label:nth-child(4),
+  .project-row .yr    { grid-column: 11 / 13; }
+
+  .about-meta .meta-block { grid-column: span 6; }
+
+  .contact-grid { grid-template-columns: 1fr; row-gap: 3.5rem; }
+  .contact-form-wrap { grid-column: auto; padding-right: 0; }
+  .contact-info-col  { grid-column: auto; }
+
+  .project-body { grid-template-columns: 1fr; row-gap: 3rem; }
+  .project-meta  { grid-column: auto; position: static; padding-right: 0; }
+  .project-desc  { grid-column: auto; }
+
   .img-grid-2 { grid-template-columns: 1fr; }
 }
+/* Mobile: overlay drops to 4 columns → boundaries at lines 3 / 9. */
 @media (max-width: 600px) {
-  .projects-cols { grid-template-columns: 2rem 1fr 3.5rem; }
-  .project-row   { grid-template-columns: 2rem 1fr 3.5rem; }
+  :root { --grid-cols: 4; }
+  .grid-rail, .grid-tick { display: none; }
   .header-nav { gap: 1.5rem; }
   .cursor-preview { display: none; }
-  .about-meta { grid-template-columns: 1fr 1fr; }
+
+  .projects-cols .col-label:nth-child(1),
+  .project-row .num   { grid-column: 1 / 4; }
+  .projects-cols .col-label:nth-child(2),
+  .project-row .title { grid-column: 4 / 10; }
+  .projects-cols .col-label:nth-child(4),
+  .project-row .yr    { grid-column: 10 / 13; }
+
   .hero-inner {
     flex-direction: column;
     align-items: flex-start;
@@ -707,7 +837,7 @@ img { display: block; max-width: 100%; }
   text-transform: uppercase;
 }
 
-/* ─── CLOCK CURSOR — all pages ─── */
+/* ─── GRID CROSSHAIR CURSOR — all pages ─── */
 * { cursor: none; }
 
 .hero, .projects,

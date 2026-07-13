@@ -1,3 +1,36 @@
+// ── Grid overlay — thin black lines revealing the layout ──
+(function () {
+  const overlay = document.createElement('div');
+  overlay.className = 'grid-overlay';
+  overlay.setAttribute('aria-hidden', 'true');
+
+  overlay.innerHTML =
+    '<div class="grid-frame"></div>' +
+    '<div class="grid-cols"></div>' +
+    '<div class="grid-rule top"></div>' +
+    '<div class="grid-rule bottom"></div>';
+
+  const railL = document.createElement('div');
+  railL.className = 'grid-rail left';
+  railL.innerHTML = '<span>GRIDS — Graphic &amp; Brand Design Studio</span>';
+
+  const railR = document.createElement('div');
+  railR.className = 'grid-rail right';
+  railR.innerHTML = '<span>Portfolio — Seoul, KR</span>';
+
+  const ticks = document.createElement('div');
+  ticks.innerHTML =
+    '<div class="grid-tick tl">Grid · 12</div>' +
+    '<div class="grid-tick tr">37.55°N 126.99°E</div>' +
+    '<div class="grid-tick bl">© 2026</div>' +
+    '<div class="grid-tick br">GRIDS</div>';
+
+  document.body.prepend(overlay);
+  document.body.appendChild(railL);
+  document.body.appendChild(railR);
+  while (ticks.firstChild) document.body.appendChild(ticks.firstChild);
+})();
+
 // ── Image preview on project list hover ──
 const preview   = document.getElementById('cursorPreview');
 const previewImg = document.getElementById('previewImg');
@@ -26,7 +59,8 @@ if (preview && previewImg) {
   });
 }
 
-// ── Clock cursor — lines radiate from mouse position ──
+// ── Grid crosshair cursor — full-screen vertical + horizontal lines
+//    crossing at the mouse position ──
 (function () {
   if (document.body.dataset.cursor === 'default') return;
   if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
@@ -35,12 +69,16 @@ if (preview && previewImg) {
   document.body.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
+  let dpr = window.devicePixelRatio || 1;
   let mouseX = window.innerWidth  / 2;
   let mouseY = window.innerHeight / 2;
+  let visible = false;
 
   function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
+    dpr = window.devicePixelRatio || 1;
+    canvas.width  = window.innerWidth  * dpr;
+    canvas.height = window.innerHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   window.addEventListener('resize', resize);
   resize();
@@ -48,44 +86,34 @@ if (preview && previewImg) {
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
+    visible = true;
   });
+  document.addEventListener('mouseleave', () => { visible = false; });
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
 
-    const cx = mouseX;
-    const cy = mouseY;
-    const R  = Math.hypot(canvas.width, canvas.height);
+    if (visible) {
+      // crisp 1px hairlines: snap to half-pixel
+      const cx = Math.round(mouseX) + 0.5;
+      const cy = Math.round(mouseY) + 0.5;
 
-    const now = new Date();
-    const h   = now.getHours() % 12;
-    const m   = now.getMinutes();
-    const s   = now.getSeconds(); // integer → tick movement
+      ctx.strokeStyle = 'rgba(0,0,0,0.9)';
+      ctx.lineWidth = 1;
 
-    const secAngle  = (s       / 60) * Math.PI * 2 - Math.PI / 2;
-    const minAngle  = ((m + s  / 60) / 60) * Math.PI * 2 - Math.PI / 2;
-    const hourAngle = ((h + m  / 60) / 12) * Math.PI * 2 - Math.PI / 2;
-
-    function line(angle, width, opacity) {
-      const cos = Math.cos(angle);
-      const sin = Math.sin(angle);
       ctx.beginPath();
-      ctx.moveTo(cx - cos * R, cy - sin * R);
-      ctx.lineTo(cx + cos * R, cy + sin * R);
-      ctx.strokeStyle = `rgba(0,0,0,${opacity})`;
-      ctx.lineWidth   = width;
+      ctx.moveTo(cx, 0);
+      ctx.lineTo(cx, h);   // vertical
+      ctx.moveTo(0, cy);
+      ctx.lineTo(w, cy);   // horizontal
       ctx.stroke();
+
+      // small solid node at the intersection
+      ctx.fillStyle = 'rgba(0,0,0,0.9)';
+      ctx.fillRect(cx - 2.5, cy - 2.5, 5, 5);
     }
-
-    line(hourAngle, 1, 1);
-    line(minAngle,  1, 1);
-    line(secAngle,   7, 1);
-
-    // Center dot
-    ctx.beginPath();
-    ctx.arc(cx, cy, 3, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(0,0,0,0.9)';
-    ctx.fill();
 
     requestAnimationFrame(draw);
   }
