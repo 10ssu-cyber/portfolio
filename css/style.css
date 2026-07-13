@@ -45,6 +45,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  /* no hyphenation (EN) + break Korean by word/eojeol, not by character,
+     so lines never end on an awkward mid-word break */
+  -webkit-hyphens: none;
+  hyphens: none;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
@@ -218,11 +224,7 @@ img { display: block; max-width: 100%; }
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted);
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
 }
-.cat-nav-label .cat-nav-count { font-variant-numeric: tabular-nums; }
 .cat-link {
   grid-column: span 2;
   padding-right: 1rem;
@@ -303,7 +305,7 @@ img { display: block; max-width: 100%; }
 .hero-contact {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 0.3rem;
 }
 
@@ -377,7 +379,7 @@ img { display: block; max-width: 100%; }
   font-size: 12px;
   font-weight: 500;
   color: var(--muted);
-  text-align: right;
+  text-align: left;
   font-variant-numeric: tabular-nums;
 }
 
@@ -744,7 +746,7 @@ img { display: block; max-width: 100%; }
   font-weight: 500;
   color: var(--ink);
   letter-spacing: -0.01em;
-  text-align: right;
+  text-align: left;
 }
 
 /* ─── CATEGORY LIST PAGE ─── */
@@ -839,6 +841,16 @@ img { display: block; max-width: 100%; }
   /* category nav → 2 per row on mobile */
   .cat-nav-label { grid-column: 1 / 13; margin-bottom: 0.75rem; }
   .cat-link { grid-column: span 6; margin-bottom: 1.25rem; }
+
+  /* collapse forced line breaks in flowing body copy so text wraps
+     naturally instead of breaking at desktop-authored points */
+  .about-text p br,
+  .project-desc p br,
+  .contact-form-intro br,
+  .info-block p br { display: none; }
+
+  /* hide the external-link arrow next to Instagram links on mobile */
+  .ext-arrow { display: none; }
 }
 
 /* ─── WANTED SANS — description / body text only ─── */
