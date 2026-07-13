@@ -835,9 +835,9 @@ img { display: block; max-width: 100%; }
   .projects-cols .col-label:nth-child(1),
   .project-row .num   { grid-column: 1 / 4; }
   .projects-cols .col-label:nth-child(2),
-  .project-row .title { grid-column: 4 / 10; }
+  .project-row .title { grid-column: 4 / 13; }
   .projects-cols .col-label:nth-child(4),
-  .project-row .yr    { grid-column: 10 / 13; }
+  .project-row .yr    { display: none; }
 
   .hero-inner {
     flex-direction: column;
