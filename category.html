@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Work — AXIS SEOUL</title>
-  <meta name="description" content="AXIS SEOUL — selected work by category">
+  <title>Work — Normal Works</title>
+  <meta name="description" content="Normal Works — selected work by category">
   <link rel="icon" type="image/png" href="REF/favicon.png">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -12,7 +12,7 @@
 
   <header class="site-header">
     <div class="header-logo">
-      <a href="index.html">AXIS SEOUL</a>
+      <a href="index.html">Normal Works</a>
     </div>
     <nav>
       <ul class="header-nav">
@@ -40,7 +40,7 @@
   <p class="cat-empty" id="catEmpty" hidden>No projects in this category yet.</p>
 
   <footer class="site-footer">
-    <span>© 2026 AXIS SEOUL</span>
+    <span>© 2026 Normal Works</span>
     <span>Seoul, Korea</span>
   </footer>
 
@@ -62,7 +62,7 @@
       var cat  = new URLSearchParams(location.search).get('cat');
       var name = CATS[cat] || 'All Work';
 
-      document.title = name + ' — AXIS SEOUL';
+      document.title = name + ' — Normal Works';
       document.getElementById('catTitle').textContent = name;
       document.getElementById('catNum').textContent = CATS[cat] ? 'Category' : 'Index';
 
