@@ -12,7 +12,7 @@
 
   const railL = document.createElement('div');
   railL.className = 'grid-rail left';
-  railL.innerHTML = '<span>GRIDS — Graphic &amp; Brand Design Studio</span>';
+  railL.innerHTML = '<span>AXIS SEOUL — Graphic &amp; Brand Design Studio</span>';
 
   const railR = document.createElement('div');
   railR.className = 'grid-rail right';
@@ -23,7 +23,7 @@
     '<div class="grid-tick tl">Grid · 12</div>' +
     '<div class="grid-tick tr">37.55°N 126.99°E</div>' +
     '<div class="grid-tick bl">© 2026</div>' +
-    '<div class="grid-tick br">GRIDS</div>';
+    '<div class="grid-tick br">AXIS SEOUL</div>';
 
   document.body.prepend(overlay);
   document.body.appendChild(railL);
