@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — GRIDS</title>
+  <meta name="description" content="GRIDS — selected work by category">
+  <link rel="icon" type="image/png" href="REF/favicon.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-logo">
+      <a href="index.html">GRIDS</a>
+    </div>
+    <nav>
+      <ul class="header-nav">
+        <li><a href="about.html"><span class="nav-num">01</span>About</a></li>
+        <li><a href="contact.html"><span class="nav-num">02</span>Work Inquiry</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="page-top">
+    <a href="index.html" class="project-back">← All Work</a>
+    <p class="page-section-num" id="catNum">Category</p>
+    <h1 class="page-title" id="catTitle">Work</h1>
+  </div>
+
+  <section class="projects" id="catProjects">
+    <div class="projects-cols">
+      <span class="col-label">No.</span>
+      <span class="col-label">Project</span>
+      <span class="col-label">Discipline</span>
+      <span class="col-label" style="text-align:right">Year</span>
+    </div>
+  </section>
+
+  <p class="cat-empty" id="catEmpty" hidden>No projects in this category yet.</p>
+
+  <footer class="site-footer">
+    <span>© 2026 GRIDS</span>
+    <span>Seoul, Korea</span>
+  </footer>
+
+  <div class="cursor-preview" id="cursorPreview">
+    <img src="" alt="" id="previewImg">
+  </div>
+
+  <script src="js/projects.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      var CATS = {
+        'brand-identity':   'Brand Identity',
+        'exhibition-design':'Exhibition Design',
+        'editorial-design': 'Editorial Design',
+        'graphic-design':   'Graphic Design',
+        'motion-graphic':   'Motion Graphic'
+      };
+      var cat  = new URLSearchParams(location.search).get('cat');
+      var name = CATS[cat] || 'All Work';
+
+      document.title = name + ' — GRIDS';
+      document.getElementById('catTitle').textContent = name;
+      document.getElementById('catNum').textContent = CATS[cat] ? 'Category' : 'Index';
+
+      var count = renderProjectRows(
+        document.getElementById('catProjects'),
+        { cat: CATS[cat] ? cat : null }
+      );
+      if (!count) document.getElementById('catEmpty').hidden = false;
+    })();
+  </script>
+</body>
+</html>

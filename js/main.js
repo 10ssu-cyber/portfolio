@@ -32,12 +32,12 @@
 })();
 
 // ── Image preview on project list hover ──
-const preview   = document.getElementById('cursorPreview');
+// Exposed as window.bindProjectRows so dynamically injected rows
+// (e.g. on category.html) can be wired up after they're added.
+const preview    = document.getElementById('cursorPreview');
 const previewImg = document.getElementById('previewImg');
 
 if (preview && previewImg) {
-  const rows = document.querySelectorAll('.project-row[data-img]');
-
   document.addEventListener('mousemove', e => {
     let x = e.clientX + 24;
     let y = e.clientY - 120;
@@ -48,15 +48,22 @@ if (preview && previewImg) {
     preview.style.transform = `translate(${x}px, ${y}px)`;
   });
 
-  rows.forEach(row => {
-    row.addEventListener('mouseenter', () => {
-      previewImg.src = row.getAttribute('data-img');
-      preview.classList.add('active');
+  window.bindProjectRows = function (scope) {
+    (scope || document).querySelectorAll('.project-row[data-img]').forEach(row => {
+      if (row.dataset.previewBound) return;
+      row.dataset.previewBound = '1';
+      row.addEventListener('mouseenter', () => {
+        previewImg.src = row.getAttribute('data-img');
+        preview.classList.add('active');
+      });
+      row.addEventListener('mouseleave', () => {
+        preview.classList.remove('active');
+      });
     });
-    row.addEventListener('mouseleave', () => {
-      preview.classList.remove('active');
-    });
-  });
+  };
+  window.bindProjectRows();
+} else {
+  window.bindProjectRows = function () {};
 }
 
 // ── Grid crosshair cursor — full-screen vertical + horizontal lines

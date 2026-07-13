@@ -23,6 +23,34 @@
   </header>
 
   <section class="hero">
+    <nav class="category-nav">
+      <span class="cat-nav-label">Categories<span class="cat-nav-count">05</span></span>
+      <a href="category.html?cat=brand-identity" class="cat-link">
+        <span class="cat-idx">01</span>
+        <span class="cat-title">Brand<br>Identity</span>
+        <span class="cat-meta">1 Project</span>
+      </a>
+      <a href="category.html?cat=exhibition-design" class="cat-link">
+        <span class="cat-idx">02</span>
+        <span class="cat-title">Exhibition<br>Design</span>
+        <span class="cat-meta">2 Projects</span>
+      </a>
+      <a href="category.html?cat=editorial-design" class="cat-link">
+        <span class="cat-idx">03</span>
+        <span class="cat-title">Editorial<br>Design</span>
+        <span class="cat-meta">1 Project</span>
+      </a>
+      <a href="category.html?cat=graphic-design" class="cat-link">
+        <span class="cat-idx">04</span>
+        <span class="cat-title">Graphic<br>Design</span>
+        <span class="cat-meta">2 Projects</span>
+      </a>
+      <a href="category.html?cat=motion-graphic" class="cat-link">
+        <span class="cat-idx">05</span>
+        <span class="cat-title">Motion<br>Graphic</span>
+        <span class="cat-meta">2 Projects</span>
+      </a>
+    </nav>
     <div class="hero-inner">
       <div class="hero-left">
         <h1 class="hero-name">works.<br>GRIDS</h1>
@@ -41,74 +69,14 @@
     </div>
   </section>
 
-  <section class="projects">
+  <section class="projects" id="projectList">
     <div class="projects-cols">
       <span class="col-label">No.</span>
       <span class="col-label">Project</span>
       <span class="col-label">Discipline</span>
       <span class="col-label" style="text-align:right">Year</span>
     </div>
-
-    <a href="work/hyundai-pony.html" class="project-row" data-img="REF/Hyundai_Pony_1.jpg">
-      <span class="num">001</span>
-      <span class="title">Retrace Collection Pony</span>
-      <span class="cat">Book Design, Editorial</span>
-      <span class="yr">2023</span>
-    </a>
-    <a href="work/project-02.html" class="project-row" data-img="REF/Mediacity Biennale_1.jpg">
-      <span class="num">002</span>
-      <span class="title">Seoul Mediacity Biennale Identity</span>
-      <span class="cat">Brand Identity</span>
-      <span class="yr">2023</span>
-    </a>
-    <a href="work/project-03.html" class="project-row" data-img="REF/Moka_1.jpg">
-      <span class="num">003</span>
-      <span class="title">Un-Printed Ideas 4</span>
-      <span class="cat">Exhibition Design</span>
-      <span class="yr">2024</span>
-    </a>
-    <a href="work/project-04.html" class="project-row" data-img="REF/SSM_1.jpg">
-      <span class="num">004</span>
-      <span class="title">SAC Music Festival</span>
-      <span class="cat">Graphic Design</span>
-      <span class="yr">2023–24</span>
-    </a>
-    <a href="work/project-05.html" class="project-row" data-img="REF/Loop1.jpg">
-      <span class="num">005</span>
-      <span class="title">Alternate Space Loop</span>
-      <span class="cat">Exhibition Design</span>
-      <span class="yr">2024</span>
-    </a>
-    <a href="work/project-06.html" class="project-row" data-img="REF/Outernet_1.jpg">
-      <span class="num">006</span>
-      <span class="title">Outernet Signature Motion</span>
-      <span class="cat">Motion Graphic</span>
-      <span class="yr">2023</span>
-    </a>
-    <a href="work/project-07.html" class="project-row" data-img="REF/Leenalchi_1.jpg">
-      <span class="num">007</span>
-      <span class="title">Leenalchi 'Damnyo'</span>
-      <span class="cat">Graphic Design</span>
-      <span class="yr">2023</span>
-    </a>
-    <a href="work/project-08.html" class="project-row">
-      <span class="num">008</span>
-      <span class="title">DDP Countdown 2025</span>
-      <span class="cat">Motion Graphic</span>
-      <span class="yr">2024</span>
-    </a>
-    <a href="work/project-09.html" class="project-row">
-      <span class="num">009</span>
-      <span class="title">Coming Soon</span>
-      <span class="cat">—</span>
-      <span class="yr">—</span>
-    </a>
-    <a href="work/project-10.html" class="project-row">
-      <span class="num">010</span>
-      <span class="title">Coming Soon</span>
-      <span class="cat">—</span>
-      <span class="yr">—</span>
-    </a>
+    <!-- rows rendered from js/projects.js -->
   </section>
 
   <footer class="site-footer">
@@ -120,6 +88,10 @@
     <img src="" alt="" id="previewImg">
   </div>
 
+  <script src="js/projects.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    renderProjectRows(document.getElementById('projectList'));
+  </script>
 </body>
 </html>
