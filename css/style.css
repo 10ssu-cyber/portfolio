@@ -722,6 +722,14 @@ img { display: block; max-width: 100%; }
   color: var(--muted);
   margin-top: 0.5rem;
 }
+.video-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.video-grid-3 .video-item { overflow: hidden; background: #111; }
+.video-grid-3 video { width: 100%; display: block; cursor: pointer; }
 .project-nav {
   padding: 2.5rem var(--pad);
   border-top: 1px solid var(--border);
@@ -815,6 +823,7 @@ img { display: block; max-width: 100%; }
   .project-desc  { grid-column: auto; }
 
   .img-grid-2 { grid-template-columns: 1fr; }
+  .video-grid-3 { grid-template-columns: 1fr; }
 }
 /* Mobile: overlay drops to 4 columns → boundaries at lines 3 / 9. */
 @media (max-width: 600px) {
