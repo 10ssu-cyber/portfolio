@@ -119,7 +119,6 @@
           <label for="message">Project Brief</label>
           <textarea id="message" name="message" placeholder="Describe your project, goals, and any references." required></textarea>
         </div>
-        <div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"></div>
         <button type="submit" class="btn-submit" id="submitBtn">Send Inquiry</button>
       </form>
 
@@ -193,7 +192,6 @@
   </footer>
 
   <script src="js/main.js"></script>
-  <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
   <script>
     const form = document.getElementById('contactForm');
     const btn  = document.getElementById('submitBtn');
@@ -204,19 +202,11 @@
       btn.textContent = 'Sending…';
       btn.disabled = true;
 
-      const fd = new FormData(form);
-      if (!fd.get('h-captcha-response')) {
-        btn.textContent = 'Send Inquiry';
-        btn.disabled = false;
-        alert('Please complete the captcha.');
-        return;
-      }
-
       try {
         const res = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(Object.fromEntries(fd))
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
         });
         const data = await res.json();
 
