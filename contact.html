@@ -226,7 +226,8 @@
         } else {
           btn.textContent = 'Send Inquiry';
           btn.disabled = false;
-          alert('Something went wrong. Please try again.');
+          alert('Error: ' + (data.message || 'Something went wrong. Please try again.'));
+          console.error('Web3Forms response:', data);
         }
       } catch {
         btn.textContent = 'Send Inquiry';
